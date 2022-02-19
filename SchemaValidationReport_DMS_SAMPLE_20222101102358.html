@@ -1,0 +1,1061 @@
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="generator" content="PSQL">
+<style type=text/css> body {font:10pt Arial,Helvetica,sans-serif; color:black; background:White;} p {font:10pt Arial,Helvetica,sans-serif; color:black; background:White;} table,tr,td {font:10pt Arial,Helvetica,sans-serif; color:Black; background:#f7f7e7; padding:0px 0px 0px 0px; margin:0px 0px 0px 0px;} th {font:bold 10pt Arial,Helvetica,sans-serif; color:#336699; background:#cccc99; padding:0px 0px 0px 0px;} h1 {font:16pt Arial,Helvetica,Geneva,sans-serif; color:#336699; background color:White; border-bottom:1px solid #cccc99; margin-top:0pt; margin-bottom:0pt; padding:0px 0px 0px 0px;- } h2 {font:bold 10pt Arial,Helvetica,Geneva,sans-serif; color:#336699; background-color:White; margin-top:4pt; margin-bottom:0pt;} a {font:9pt Arial,Helvetica,sans-serif; color:#663300; background:#ffffff; margin-top:0pt; margin-bottom:0pt; vertical-align:top;}</style>
+</head>
+<h1 style="font-family:verdana"align="center">DMS_SAMPLE Schema Validation Report for Oracle to PostgreSQL Migration</h1>
+<div class="table-content">
+<p style="font-family:verdana"><strong>Contents</strong></p>
+<ol>
+<li><a href="#Overview">Overview</a>
+</li>
+<li><a href="#DatabaseConfiguration">Database Configuration</a>
+<ol>
+<li><a href="#DatabaseConfiguration1">Database</a></li>
+<li><a href="#DatabaseConfiguration2">Schema Size</a></li>
+<li><a href="#DatabaseConfiguration3">Character Encoding and Collation</a></li>
+</ol>
+<li><a href="#Databaseobjects">Database Objects</a>
+<ol>
+<li><a href="#Databaseobjects1">Objects Summary</a></li>
+<li><a href="#Databaseobjects2">Objects Mismatch</a></li>
+<ol>
+<li><a href="#ObjectMismatch1">Tables</a></li>
+<li><a href="#ObjectMismatch1A">Tables Partition</a></li>
+<li><a href="#ObjectMismatch2">Indexes By Table</a></li>
+<li><a href="#ObjectMismatch2A">Partition Indexes</a></li>
+<li><a href="#ObjectMismatch2B">Indexes</a></li>
+<li><a href="#ObjectMismatch3">Table columns</a></li>
+<li><a href="#ObjectMismatch4">Sequence</a></li>
+<li><a href="#ObjectMismatch5">Sequence maxval</a></li>
+<li><a href="#ObjectMismatch6">Constraints</a></li>
+<ol>
+<li><a href="#Constraints1">Primary key</a></li>
+<li><a href="#Constraints2A">Foreign Reference</a></li>
+<li><a href="#Constraints2">Unique</a></li>
+<li><a href="#Constraints3">Check</a></li>
+<li><a href="#Constraints4">Not Null</a></li>
+<li><a href="#Constraints5">Default</a></li>
+</ol>
+<li><a href="#ObjectMismatch7">Materialized View</a></li>
+<li><a href="#ObjectMismatch8">Type</a></li>
+<li><a href="#ObjectMismatch9">View</a></li>
+<li><a href="#ObjectMismatch10">Trigger</a></li>
+</ol>
+
+
+</ol>
+<li><a href="#DataType">Data Type</a></li>
+<ol>
+<li><a href="#DataType1">Data Type Mapping Matrix</a></li>
+<li><a href="#DataType2">Data Type Mapping on Primary and Foreign key columns</a></li>
+</ol>
+<li><a href="#MigrationAnomalies">Migration anomalies</a></li>
+<ol>
+<li><a href="#MigrationAnomalies1">Partition column not part of Primary key</a></li>
+<li><a href="#MigrationAnomalies2">Unique index as composite indexes with nullable constraint on column</a></li>
+<li><a href="#MigrationAnomalies3">User Created Extended Statistics</a></li>
+<li><a href="#MigrationAnomalies4">Default on NULLs</a></li>
+<li><a href="#MigrationAnomalies5">Database Identifier length > 63</a></li>
+</ol>
+</ol>
+</li>
+</div>
+<title>Schema Validation Report for Oracle to PostgreSQL Migration</title>
+<hr>
+<p id="Overview" class="anchor"></p>
+<h2 style="font-family:verdana">Overview</h2>
+<br>
+<h4 style="font-family:verdana;list-style-type:none">
+<li>This is the output from the Schema Validation script on Oracle to PostgreSQL Migration.</li>
+</h4>
+ Current Database Time : <b>2022-01-21 10:23:58</b>
+
+<br>
+ Oracle Database User : <b> DMS_SAMPLE</b>
+
+<br>
+ PostgreSQL Database Schema: <b> dms_sample</b>
+
+<br>
+<hr>
+<p id="DatabaseConfiguration" class="anchor"></p>
+<h2 style="font-family:verdana">Database Configuration</h2>
+<p id="DatabaseConfiguration1" class="anchor"></p>
+<h2>Database Details</h2>
+<br>
+<li><a href="#Top">Previous : </a><a href="#Top">Top : </a><a href="#DatabaseConfiguration2">Next</a></li>
+<br>
+<table border="1">
+  <tr>
+    <th align="center">Engine</th>
+    <th align="center">Database Name</th>
+    <th align="center">Version</th>
+  </tr>
+  <tr valign="top">
+    <td align="left">Oracle</td>
+    <td align="left">ORCL</td>
+    <td align="left">Oracle Database 12c Enterprise Edition Release 12.2.0.1.0 - 64bit Production</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">PostgreSQL</td>
+    <td align="left">dms_sample</td>
+    <td align="left">PostgreSQL 13.3 on x86_64-pc-linux-gnu, compiled by x86_64-pc-linux-gnu-gcc (GCC) 7.4.0, 64-bit</td>
+  </tr>
+</table>
+
+<br>
+<br>
+<p id="DatabaseConfiguration2" class="anchor"></p>
+<h2>Schema Size</h2>
+<br>
+<li><a href="#DatabaseConfiguration1">Previous : </a><a href="#Top">Top : </a><a href="#DatabaseConfiguration3">Next</a></li>
+<br>
+<table border="1">
+  <tr>
+    <th align="center">schema Name</th>
+    <th align="center">Oracle Size(GB)</th>
+    <th align="center">PostgreSQL Size(GB)</th>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="right">5</td>
+    <td align="right">4</td>
+  </tr>
+</table>
+
+<br>
+<br>
+<p id="DatabaseConfiguration3" class="anchor"></p>
+<h2>Character Encoding and Collation </h2>
+<br>
+<li><a href="#DatabaseConfiguration2">Previous : </a><a href="#Top">Top : </a><a href="#Databaseobjects">Next</a></li>
+<br>
+<table border="1">
+  <tr>
+    <th align="center">Engine</th>
+    <th align="center">Characterset/Encoding/Collation</th>
+  </tr>
+  <tr valign="top">
+    <td align="left">Oracle</td>
+    <td align="left">AL32UTF8</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">PostgreSQL</td>
+    <td align="left">Encoding = UTF8, Collation = en_US.UTF-8</td>
+  </tr>
+</table>
+
+<hr>
+<p id="Databaseobjects" class="anchor"></p>
+<h2 style="font-family:verdana">Database Objects</h2>
+<p id="Databaseobjects1" class="anchor"></p>
+<h2>Database Object Summary </h2>
+<br>
+<li><a href="#DatabaseConfiguration3">Previous : </a><a href="#Top">Top : </a><a href="#Databaseobjects2">Next</a></li>
+<h4>This section shows the count of objects in Oracle and PostgreSQL Database with source Oracle as reference.</h4>
+<table border="1">
+  <tr>
+    <th align="center">Schema Name</th>
+    <th align="center">Object Type</th>
+    <th align="center">Oracle Object Count</th>
+    <th align="center">PostgreSQL Object Count</th>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">TABLE</td>
+    <td align="right">20</td>
+    <td align="right">17</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">INDEX</td>
+    <td align="right">25</td>
+    <td align="right">23</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SEQUENCE</td>
+    <td align="right">5</td>
+    <td align="right">5</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">VIEW</td>
+    <td align="right">4</td>
+    <td align="right">0</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">TRIGGER</td>
+    <td align="right">3</td>
+    <td align="right">0</td>
+  </tr>
+</table>
+
+<hr>
+<p id="Databaseobjects2" class="anchor"></p>
+<h2 style="font-family:verdana">Database Schema Objects Mismatch</h2>
+<p id="ObjectMismatch1" class="anchor"></p>
+<h2>Missing Target Database Table Details</h2>
+<br>
+<li><a href="#Databaseobjects1">Previous : </a><a href="#Top">Top : </a><a href="#ObjectMismatch2">Next</a></li>
+<h4>This section provides the tables that exist in Oracle but are missing in PostgreSQL Database.</h4>
+<table border="1">
+  <tr>
+    <th align="center">Schema Name</th>
+    <th align="center">Table Name</th>
+    <th align="center">Partitioned</th>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">EMP_DATA</td>
+    <td align="left">NO</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">INVOICES</td>
+    <td align="left">YES</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">THIS_IS_A_TABLE_TO_HOLD_LONG_IDENTIFIERS_POSTGRES_MIGHT_TRUNCATE_IT</td>
+    <td align="left">NO</td>
+  </tr>
+</table>
+
+<p id="ObjectMismatch1A" class="anchor"></p>
+<h2>Missing Target Database Table Partition Details</h2>
+<br>
+<li><a href="#Databaseobjects1A">Previous : </a><a href="#Top">Top : </a><a href="#Databaseobjects1">Next</a></li>
+<h4>This section provides the table partitions that exist in Oracle but are missing in PostgreSQL Database.</h4>
+<table border="1">
+  <tr>
+    <th align="center">Schema Name</th>
+    <th align="center">Table Name</th>
+    <th align="center">Oracle Table Partition Count</th>
+    <th align="center">PostgreSQL Table Partition Count</th>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">INVOICES</td>
+    <td align="right">4</td>
+    <td align="right">0</td>
+  </tr>
+</table>
+
+<br>
+<br>
+<table border="1">
+  <tr>
+    <th align="center">Schema Name</th>
+    <th align="center">Table Name</th>
+    <th align="center">Partition Name</th>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">INVOICES</td>
+    <td align="left">INVOICES_Q1</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">INVOICES</td>
+    <td align="left">INVOICES_Q2</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">INVOICES</td>
+    <td align="left">INVOICES_Q3</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">INVOICES</td>
+    <td align="left">INVOICES_Q4</td>
+  </tr>
+</table>
+
+<br>
+<br>
+<p id="ObjectMismatch2" class="anchor"></p>
+<h2>Database Indexes Comparison Based on Table</h2>
+<br>
+<li><a href="#ObjectMismatch1A">Previous : </a><a href="#Top">Top : </a><a href="#ObjectMismatch2A">Next</a></li>
+<h4>This section identifies those tables, where the number of indexes does not match between Oracle and PostgreSQL Database.</h4>
+<table border="1">
+  <tr>
+    <th align="center">Schema Name</th>
+    <th align="center">Table Name</th>
+    <th align="center">Oracle Index Count</th>
+    <th align="center">PostgreSQL Index Count</th>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SEAT</td>
+    <td align="right">2</td>
+    <td align="right">1</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">EMP_DATA</td>
+    <td align="right">1</td>
+    <td align="right">0</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">INVOICES</td>
+    <td align="right">1</td>
+    <td align="right">0</td>
+  </tr>
+</table>
+
+<br>
+<br>
+<p id="ObjectMismatch2A" class="anchor"></p>
+<h2>Missing Target Database Indexes Details</h2>
+<br>
+<li><a href="#ObjectMismatch2">Previous : </a><a href="#Top">Top : </a><a href="#ObjectMismatch2B">Next</a></li>
+<h4>This section identifies those indexes that exist in Oracle but are missing in PostgreSQL Database, for non-partitioned tables.</h4>
+<table border="1">
+  <tr>
+    <th align="center">Schema Name</th>
+    <th align="center">Table Name</th>
+    <th align="center">Index Name</th>
+    <th align="center">Oracle Index Type</th>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">EMP_DATA</td>
+    <td align="left">PK_EMP1</td>
+    <td align="left">NORMAL</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SEAT</td>
+    <td align="left">SEAT_PK</td>
+    <td align="left">NORMAL</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORTING_EVENT_TICKET</td>
+    <td align="left">SET_EV_ID_TKHOLDER_ID_IDX</td>
+    <td align="left">FUNCTION-BASED NORMAL</td>
+  </tr>
+</table>
+
+<br>
+<br>
+<p id="ObjectMismatch2B" class="anchor"></p>
+<h2>Missing Table Partition Indexes</h2>
+<br>
+<li><a href="#ObjectMismatch2A">Previous : </a><a href="#Top">Top : </a><a href="#ObjectMismatch3">Next</a></li>
+<h4>This section identifies those indexes that exist in Oracle but are missing in PostgreSQL Database, for Partitioned tables.</h4>
+<table border="1">
+  <tr>
+    <th align="center">Schema Name</th>
+    <th align="center">Table Name</th>
+    <th align="center">Index Name</th>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">INVOICES</td>
+    <td align="left">SYS_C00149900</td>
+  </tr>
+</table>
+
+<br>
+<br>
+<p id="ObjectMismatch3" class="anchor"></p>
+<h2>Missing Target Database Table Column details</h2>
+<br>
+<li><a href="#ObjectMismatch2B">Previous : </a><a href="#Top">Top : </a><a href="#ObjectMismatch4">Next</a></li>
+<h4>This section identifies the columns of a table that exist in Oracle but are missing in PostgreSQL Database.</h4>
+<table border="1">
+  <tr>
+    <th align="center">Schema Name</th>
+    <th align="center">Table Name</th>
+    <th align="center">Column Name</th>
+  </tr>
+</table>
+
+<br>
+<br>
+<p id="ObjectMismatch4" class="anchor"></p>
+<h2>Missing Target Database Sequence</h2>
+<br>
+<li><a href="#ObjectMismatch3">Previous : </a><a href="#Top">Top : </a><a href="#ObjectMismatch5">Next</a></li>
+<h4>This section identifies the sequences that exist in Oracle but are missing in PostgreSQL Database.</h4>
+<table border="1">
+  <tr>
+    <th align="center">Schema Name</th>
+    <th align="center">Sequence Name</th>
+    <th align="center">Last Sequence Value</th>
+  </tr>
+</table>
+
+<br>
+<br>
+<p id="ObjectMismatch5" class="anchor"></p>
+<h2>Sequence MAXVAL Comparision</h2>
+<br>
+<li><a href="#ObjectMismatch4">Previous : </a><a href="#Top">Top : </a><a href="#ObjectMismatch6">Next</a></li>
+<h4>This section provides the last value of the sequence in Oracle Database when it is greater than the sequence value in PostgreSQL Database.</h4>
+<table border="1">
+  <tr>
+    <th align="center">Schema Name</th>
+    <th align="center">Sequence Name</th>
+    <th align="center">Oracle Last Sequence Value</th>
+    <th align="center">PostgreSQL Last Sequence Value</th>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORTING_EVENT_TICKET_SEQ</td>
+    <td align="right">346771001</td>
+    <td align="right">151602321</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORT_LOCATION_SEQ</td>
+    <td align="right">81</td>
+    <td align="right">1</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORT_TEAM_SEQ</td>
+    <td align="right">801</td>
+    <td align="right">651</td>
+  </tr>
+</table>
+
+<hr>
+<p id="ObjectMismatch6" class="anchor"></p>
+<h2 style="font-family:verdana">Database Constraint Details</h2>
+<p id="Constraints1" class="anchor"></p>
+<h2>Missing Target Database Primary key</h2>
+<br>
+<li><a href="#ObjectMismatch5">Previous : </a><a href="#Top">Top : </a><a href="#Constraints2">Next</a></li>
+<h4>This section identifies the Primary Key constraint that exist in Oracle but are missing in PostgreSQL Database.</h4>
+<table border="1">
+  <tr>
+    <th align="center">Schema Name</th>
+    <th align="center">Table Name</th>
+    <th align="center">Primary Key</th>
+    <th align="center">Constraint Column</th>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SEAT</td>
+    <td align="left">SEAT_PK</td>
+    <td align="left">{SPORT_LOCATION_ID,SEAT_LEVEL,SEAT_SECTION,SEAT_ROW,SEAT}</td>
+  </tr>
+</table>
+
+<br>
+<br>
+<p id="Constraints2A" class="anchor"></p>
+<h2>Missing Target Database Foreign Reference</h2>
+<br>
+<li><a href="#Constraints1">Previous : </a><a href="#Top">Top : </a><a href="#Constraints2">Next</a></li>
+<h4>This section identifies the Foreign Key constraint that exist in Oracle but are missing in PostgreSQL Database.</h4>
+<table border="1">
+  <tr>
+    <th align="center">Schema Name</th>
+    <th align="center">Table Name</th>
+    <th align="center">Foreign Key</th>
+    <th align="center">Constraint Column</th>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">PLAYER</td>
+    <td align="left">SPORT_TEAM_FK</td>
+    <td align="left">{SPORT_TEAM_ID}</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SEAT</td>
+    <td align="left">SEAT_TYPE_FK</td>
+    <td align="left">{SEAT_TYPE}</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SEAT</td>
+    <td align="left">S_SPORT_LOCATION_FK</td>
+    <td align="left">{SPORT_LOCATION_ID}</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORT_DIVISION</td>
+    <td align="left">SD_SPORT_LEAGUE_FK</td>
+    <td align="left">{SPORT_LEAGUE_SHORT_NAME}</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORT_DIVISION</td>
+    <td align="left">SD_SPORT_TYPE_FK</td>
+    <td align="left">{SPORT_TYPE_NAME}</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORTING_EVENT</td>
+    <td align="left">SE_AWAY_TEAM_ID_FK</td>
+    <td align="left">{AWAY_TEAM_ID}</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORTING_EVENT</td>
+    <td align="left">SE_HOME_TEAM_ID_FK</td>
+    <td align="left">{HOME_TEAM_ID}</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORTING_EVENT</td>
+    <td align="left">SE_LOCATION_ID_FK</td>
+    <td align="left">{LOCATION_ID}</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORTING_EVENT</td>
+    <td align="left">SE_SPORT_TYPE_FK</td>
+    <td align="left">{SPORT_TYPE_NAME}</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORTING_EVENT_TICKET</td>
+    <td align="left">SET_PERSON_ID</td>
+    <td align="left">{TICKETHOLDER_ID}</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORTING_EVENT_TICKET</td>
+    <td align="left">SET_SEAT_FK</td>
+    <td align="left">{SPORT_LOCATION_ID,SEAT_LEVEL,SEAT_SECTION,SEAT_ROW,SEAT}</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORTING_EVENT_TICKET</td>
+    <td align="left">SET_SPORTING_EVENT_FK</td>
+    <td align="left">{SPORTING_EVENT_ID}</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORT_LEAGUE</td>
+    <td align="left">SL_SPORT_TYPE_FK</td>
+    <td align="left">{SPORT_TYPE_NAME}</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORT_TEAM</td>
+    <td align="left">HOME_FIELD_FK</td>
+    <td align="left">{HOME_FIELD_ID}</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORT_TEAM</td>
+    <td align="left">ST_SPORT_TYPE_FK</td>
+    <td align="left">{SPORT_TYPE_NAME}</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">TICKET_PURCHASE_HIST</td>
+    <td align="left">TPH_SPORT_EVENT_TIC_ID</td>
+    <td align="left">{SPORTING_EVENT_TICKET_ID}</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">TICKET_PURCHASE_HIST</td>
+    <td align="left">TPH_TICKETHOLDER_ID</td>
+    <td align="left">{PURCHASED_BY_ID}</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">TICKET_PURCHASE_HIST</td>
+    <td align="left">TPH_TRANSFER_FROM_ID</td>
+    <td align="left">{TRANSFERRED_FROM_ID}</td>
+  </tr>
+</table>
+
+<br>
+<br>
+<p id="Constraints2" class="anchor"></p>
+<h2>Missing Target Database Unique Constraint</h2>
+<br>
+<li><a href="#Constraints2A">Previous : </a><a href="#Top">Top : </a><a href="#Constraints3">Next</a></li>
+<h4>This section identifies the Unique Key constraint that exist in Oracle but are missing/mismatch in PostgreSQL Database.</h4>
+<table border="1">
+  <tr>
+    <th align="center">Schema Name</th>
+    <th align="center">Table Name</th>
+    <th align="center">Unique Key</th>
+    <th align="center">Constraint Column</th>
+  </tr>
+</table>
+
+<br>
+<br>
+<p id="Constraints3" class="anchor"></p>
+<h2>Missing Target Database Check Constraints</h2>
+<br>
+<li><a href="#Constraints2">Previous : </a><a href="#Top">Top : </a><a href="#Constraints4">Next</a></li>
+<h4>This section identifies the Foreign Key constraint that exist in Oracle but are missing/mismatch in PostgreSQL Database.</h4>
+<table border="1">
+  <tr>
+    <th align="center">Schema Name</th>
+    <th align="center">Table Name</th>
+    <th align="center">Oracle Check Constraint Count</th>
+    <th align="center">PostgreSQL Check Constraint Count</th>
+  </tr>
+</table>
+
+<br>
+<br>
+<p id="Constraints4" class="anchor"></p>
+<h2>Missing Nullable Constraints</h2>
+<br>
+<li><a href="#Constraints3">Previous : </a><a href="#Top">Top : </a><a href="#Constraints5">Next</a></li>
+<h4>This section identifies the Null Column constraint that exist in Oracle but are missing/mismatch in PostgreSQL Database.</h4>
+<table border="1">
+  <tr>
+    <th align="center">Schema Name</th>
+    <th align="center">Table Name</th>
+    <th align="center">Column Name</th>
+    <th align="center">Column Nullable</th>
+  </tr>
+</table>
+
+<br>
+<br>
+<p id="Constraints5" class="anchor"></p>
+<h2>Mismatch Default Constraints</h2>
+<br>
+<li><a href="#Constraints4">Previous : </a><a href="#Top">Top : </a><a href="#ObjectMismatch7">Next</a></li>
+<h4>This section identifies count of Columns with default constraint for a table, that exist in Oracle Database but do not match with the table in PostgreSQL Database.</h4>
+<table border="1">
+  <tr>
+    <th align="center">Schema Name</th>
+    <th align="center">Table Name</th>
+    <th align="center">Oracle Default Columns Count</th>
+    <th align="center">PostgreSQL Default Columns Count</th>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORTING_EVENT</td>
+    <td align="right">1</td>
+    <td align="right">2</td>
+  </tr>
+</table>
+
+<br>
+<br>
+<p id="ObjectMismatch7" class="anchor"></p>
+<h2>Materialized View</h2>
+<br>
+<li><a href="#ObjectMismatch6">Previous : </a><a href="#Top">Top : </a><a href="#ObjectMismatch8">Next</a></li>
+<h4>This section identifies Materilized Views in Oracle Database that do not exist/match in PostgreSQL Database.</h4>
+<table border="1">
+  <tr>
+    <th align="center">Schema Name</th>
+    <th align="center">MView Name</th>
+    <th align="center">Refresh Method</th>
+  </tr>
+</table>
+
+<br>
+<br>
+<p id="ObjectMismatch8" class="anchor"></p>
+<h2>Type</h2>
+<br>
+<li><a href="#ObjectMismatch7">Previous : </a><a href="#Top">Top : </a><a href="#ObjectMismatch9">Next</a></li>
+<h4>This section identifies Type in Oracle Database that do not exist/match in PostgreSQL Database.</h4>
+<table border="1">
+  <tr>
+    <th align="center">Schema Name</th>
+    <th align="center">Type Name</th>
+    <th align="center">Type Status</th>
+  </tr>
+</table>
+
+<br>
+<br>
+<p id="ObjectMismatch9" class="anchor"></p>
+<h2>View</h2>
+<br>
+<li><a href="#ObjectMismatch8">Previous : </a><a href="#Top">Top : </a><a href="#ObjectMismatch10">Next</a></li>
+<h4>This section identifies Views in Oracle Database that do not exist/match in PostgreSQL Database.</h4>
+<table border="1">
+  <tr>
+    <th align="center">Schema Name</th>
+    <th align="center">View Name</th>
+    <th align="center">View Status</th>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORTING_EVENT_INFO</td>
+    <td align="left">VALID</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORTING_EVENT_TICKET_INFO</td>
+    <td align="left">VALID</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">THIS_IS_A_VIEW_TO_HOLD_LONG_IDENTIFIERS_POSTGRES_MIGHT_TRUNCATE_IT</td>
+    <td align="left">VALID</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">VW_REMOTE_1</td>
+    <td align="left">VALID</td>
+  </tr>
+</table>
+
+<br>
+<br>
+<p id="ObjectMismatch10" class="anchor"></p>
+<h2>Trigger</h2>
+<br>
+<li><a href="#ObjectMismatch9">Previous : </a><a href="#Top">Top : </a><a href="#Databaseobjects3">Next</a></li>
+<h4>This section identifies Triggers in Oracle Database that do not exist/match in PostgreSQL Database.</h4>
+<table border="1">
+  <tr>
+    <th align="center">Schema Name</th>
+    <th align="center">Trigger Name</th>
+    <th align="center">Trigger Status</th>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">PLAYER_ID_TRG</td>
+    <td align="left">VALID</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORTING_EVENT_ID_TRG</td>
+    <td align="left">VALID</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORT_TEAM_ID_TRG</td>
+    <td align="left">VALID</td>
+  </tr>
+</table>
+
+<br>
+<br>
+<p id="Databaseobjects3" class="anchor"></p>
+<h2>Oracle Package as PostreSQL Schema comparision </h2>
+<br>
+<li><a href="#Databaseobjects2">Previous : </a><a href="#Top">Top : </a><a href="#Databaseobjects4">Next</a></li>
+<h4>During Oracle to PostgreSQL conversion, Packages in Oracle are converted to Schemas in PostgreSQL Database.</h4>
+<h4>This section identifies those Packages in Oracle Database that do not have a schema in PostgreSQL Database.</h4>
+<table border="1">
+  <tr>
+    <th align="center">Schema Name</th>
+    <th align="center">Package Name</th>
+  </tr>
+</table>
+
+<br>
+<h2>Package body object comparision </h2>
+<h4>This section identifies public procedures and functions defined in Package specification of an Oracle Database that do not exist in the schema of a PostgreSQL Database.</h4>
+<table border="1">
+  <tr>
+    <th align="center">Schema Name</th>
+    <th align="center">Object Type</th>
+    <th align="center">Package Name</th>
+    <th align="center">Object Name</th>
+  </tr>
+</table>
+
+<br>
+<br>
+<p id="Databaseobjects4" class="anchor"></p>
+<h2>Procedures and Functions </h2>
+<br>
+<li><a href="#Databaseobjects3">Previous : </a><a href="#Top">Top : </a><a href="#DataType1">Next</a></li>
+<h4>This section identifies procedures and functions in Oracle Database that do not exist in PostgreSQL Database.<h4>
+<table border="1">
+  <tr>
+    <th align="center">Schema Name</th>
+    <th align="center">Object Type</th>
+    <th align="center">Object Name</th>
+    <th align="center">Object Status</th>
+  </tr>
+</table>
+
+<hr>
+<p id="DataType" class="anchor"></p>
+<h2 style="font-family:verdana">Data Type</h2>
+<p id="DataType1" class="anchor"></p>
+<h2>Data Type Mapping Matrix </h2>
+<br>
+<li><a href="#Databaseobjects4">Previous : </a><a href="#Top">Top : </a><a href="#Data1">Next</a></li>
+<h4>This section display of Column data type Matrix for Tables in Oracle and PostgreSQL Database.<h4>
+<table border="1">
+  <tr>
+    <th align="center">Oracle Data Type</th>
+    <th align="center">PostgreSQL Data Type</th>
+  </tr>
+  <tr valign="top">
+    <td align="left">DATE</td>
+    <td align="left">timestamp without time zone</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">NUMBER</td>
+    <td align="left">bigint</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">NUMBER</td>
+    <td align="left">double precision</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">NUMBER</td>
+    <td align="left">integer</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">NUMBER</td>
+    <td align="left">smallint</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">NUMBER(*,0)</td>
+    <td align="left">integer</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">NUMBER(1,0)</td>
+    <td align="left">numeric(1,0)</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">NUMBER(1,0)</td>
+    <td align="left">smallint</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">NUMBER(2,0)</td>
+    <td align="left">numeric(2,0)</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">NUMBER(3,0)</td>
+    <td align="left">numeric(3,0)</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">NUMBER(4,0)</td>
+    <td align="left">numeric(4,0)</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">NUMBER(7,0)</td>
+    <td align="left">numeric(7,0)</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">NUMBER(8,2)</td>
+    <td align="left">numeric(8,2)</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">VARCHAR2</td>
+    <td align="left">character varying</td>
+  </tr>
+</table>
+
+<p id="DataType2" class="anchor"></p>
+<h2>Data Type Mapping Matrix for Primary and Foreign key </h2>
+<br>
+<li><a href="#DataType1">Previous : </a><a href="#Top">Top : </a><a href="#Data1">Next</a></li>
+<h4>This section shows the data type mismatch between Parent(Primary/Unique Key) and Child keys(Foreign Key) in PostgreSQL Database.</h4>
+<table border="1">
+  <tr>
+    <th align="center">Parent Schema</th>
+    <th align="center">Parent Table Name</th>
+    <th align="center">Parent Column name</th>
+    <th align="center">PostgreSQL Parent Data type</th>
+    <th align="center">Child Schema</th>
+    <th align="center">Child Table Name</th>
+    <th align="center">Child Column name</th>
+    <th align="center">PostgreSQL Child Data type</th>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORTING_EVENT</td>
+    <td align="left">ID</td>
+    <td align="left">bigint</td>
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORTING_EVENT_TICKET</td>
+    <td align="left">SPORTING_EVENT_ID</td>
+    <td align="left">double precision</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORT_LOCATION</td>
+    <td align="left">ID</td>
+    <td align="left">numeric(3,0)</td>
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SEAT</td>
+    <td align="left">SPORT_LOCATION_ID</td>
+    <td align="left">double precision</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORT_LOCATION</td>
+    <td align="left">ID</td>
+    <td align="left">numeric(3,0)</td>
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORTING_EVENT</td>
+    <td align="left">LOCATION_ID</td>
+    <td align="left">smallint</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORT_TEAM</td>
+    <td align="left">ID</td>
+    <td align="left">double precision</td>
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORTING_EVENT</td>
+    <td align="left">HOME_TEAM_ID</td>
+    <td align="left">integer</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORT_TEAM</td>
+    <td align="left">ID</td>
+    <td align="left">double precision</td>
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">SPORTING_EVENT</td>
+    <td align="left">AWAY_TEAM_ID</td>
+    <td align="left">integer</td>
+  </tr>
+</table>
+
+<hr>
+<p id="MigrationAnomalies" class="anchor"></p>
+<h2 style="font-family:verdana">Migration Anomalies</h2>
+<p id="MigrationAnomalies1" class="anchor"></p>
+<h2>Partition column not part of Primary key </h2>
+<br>
+<li><a href="#Data1">Previous : </a><a href="#Top">Top : </a><a href="#MigrationAnomalies2">Next</a></li>
+<h4>This section identifies Primary keys that is missing Partition key column for Partitioned tables in Oracle Database.</h4>
+<table border="1">
+  <tr>
+    <th align="center">Schema Name</th>
+    <th align="center">Table Name</th>
+    <th align="center">Partition Column</th>
+    <th align="center">Primary Column</th>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">INVOICES</td>
+    <td align="left">INVOICE_DATE</td>
+    <td align="left">INVOICE_NO</td>
+  </tr>
+</table>
+
+<br>
+<br>
+<p id="MigrationAnomalies2" class="anchor"></p>
+<h2>Unique on Composite column with nullable constraint on either </h2>
+<br>
+<li><a href="#MigrationAnomalies1">Previous : </a><a href="#Top">Top : </a><a href="#MigrationAnomalies3">Next</a></li>
+<h4>This section identifies Unique index as composite indexes with nullable constraint in Oracle Database.</h4>
+<table border="1">
+  <tr>
+    <th align="center">Schema Name</th>
+    <th align="center">Table Name</th>
+    <th align="center">Constraint Name</th>
+    <th align="center">Unique Columns</th>
+    <th align="center">Nullable Column</th>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">UNIQ_SAMPLE</td>
+    <td align="left">CONSTR_ID</td>
+    <td align="left">COL1,COL2</td>
+    <td align="left">COL2</td>
+  </tr>
+</table>
+
+<br>
+<br>
+<p id="MigrationAnomalies3" class="anchor"></p>
+<h2>User Created Extended Statistics </h2>
+<br>
+<li><a href="#MigrationAnomalies2">Previous : </a><a href="#Top">Top : </a><a href="#MigrationAnomalies2">Next</a></li>
+<h4>This section identifies those tables in Oracle Database that have extended statistics.</h4>
+<table border="1">
+  <tr>
+    <th align="center">Schema Name</th>
+    <th align="center">Table Name</th>
+    <th align="center">Statistics Extension Name</th>
+    <th align="center">Extended Stat Details</th>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">EMP_DATA</td>
+    <td align="left">SYS_STU3VG629OEYG6FN0EKTGV_HQ6</td>
+    <td align="left">(&quot;JOB&quot;,&quot;DEPTNO&quot;)</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">EMP_DATA</td>
+    <td align="left">SYS_STU2JLSDWQAFJHQST7$QK81_YB</td>
+    <td align="left">(LOWER(&quot;ENAME&quot;))</td>
+  </tr>
+</table>
+
+<br>
+<br>
+<p id="MigrationAnomalies4" class="anchor"></p>
+<h2>Default on NULLs </h2>
+<br>
+<li><a href="#MigrationAnomalies3">Previous : </a><a href="#Top">Top : </a><a href="#MigrationAnomalies3">Next</a></li>
+<h4>This section identifies tables column that have default Values on Null Constraint in Oracle Database.</h4>
+<table border="1">
+  <tr>
+    <th align="center">Schema Name</th>
+    <th align="center">Table Name</th>
+    <th align="center">Column Name</th>
+    <th align="center">Default on Null</th>
+    <th align="center">Null Detail</th>
+    <th align="center">Data on Null</th>
+  </tr>
+</table>
+
+<br>
+<br>
+<p id="MigrationAnomalies5" class="anchor"></p>
+<h2>Database Identifiers Greater length > 63</h2>
+<br>
+<li><a href="#MigrationAnomalies4">Previous : </a><a href="#Top">Top : </a></li>
+<h4>This section identifies Oracle Database objects, with identifier name length greater than 63 characters.</h4>
+<table border="1">
+  <tr>
+    <th align="center">Object Type</th>
+    <th align="center">Schema Name</th>
+    <th align="center">Object Name</th>
+    <th align="center">Table Name</th>
+    <th align="center">Identifier Length</th>
+  </tr>
+  <tr valign="top">
+    <td align="left">TABLE</td>
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">THIS_IS_A_TABLE_TO_HOLD_LONG_IDENTIFIERS_POSTGRES_MIGHT_TRUNCATE_IT</td>
+    <td align="left">&nbsp; </td>
+    <td align="right">67</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">VIEW</td>
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">THIS_IS_A_VIEW_TO_HOLD_LONG_IDENTIFIERS_POSTGRES_MIGHT_TRUNCATE_IT</td>
+    <td align="left">&nbsp; </td>
+    <td align="right">66</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">VIEW-COLUMN</td>
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">THIS_IS_A_VIEWCOL_TO_HOLD_LONG_IDENTIFIERS_POSTGRES_MIGHT_TRUNCATE_IT</td>
+    <td align="left">THIS_IS_A_VIEW_TO_HOLD_LONG_IDENTIFIERS_POSTGRES_MIGHT_TRUNCATE_IT</td>
+    <td align="right">69</td>
+  </tr>
+  <tr valign="top">
+    <td align="left">TABLE-COLUMN</td>
+    <td align="left">DMS_SAMPLE</td>
+    <td align="left">THIS_IS_A_COLUMN_TO_HOLD_LONG_IDENTIFIERS_POSTGRES_MIGHT_TRUNCATE_IT</td>
+    <td align="left">THIS_IS_A_TABLE_TO_HOLD_LONG_IDENTIFIERS_POSTGRES_MIGHT_TRUNCATE_IT</td>
+    <td align="right">68</td>
+  </tr>
+</table>
+
+<h1 style="font-family:verdana"align="center"><u>End Report </u></h1>
