@@ -1,4 +1,3 @@
--- Usage :- psql -h apgmoe.cxxtirwi2zks.ap-southeast-1.rds.amazonaws.com -p 5432 -d moesit -U cpp -f DiffChecker.sql -v ora_schema="cp01" -v pg_schema="cp01"
 \set VERBOSITY terse
 \pset footer off
 select 'SchemaValidationReport_' || :'ora_schema' || '_' ||to_char(now(),'YYYYDDMMHH24MISS') || '.html' as htmlfile
