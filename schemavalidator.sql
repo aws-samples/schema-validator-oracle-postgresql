@@ -1016,9 +1016,7 @@ WHERE c.relname = table_name
  WHEN ORACLE.DATA_PRECISION IS NOT NULL AND  ORACLE.DATA_SCALE IS  NULL THEN '(' || ORACLE.DATA_PRECISION || ')'
   WHEN ORACLE.DATA_PRECISION IS  NULL AND  ORACLE.DATA_SCALE IS  NOT NULL THEN '(' || '*' ||  ',' ||  ORACLE.DATA_SCALE || ')'
  ELSE '' END as "Oracle Data Type",
-postgresql.data_type  as "PostgreSQL Data Type" ,
-ORACLE.table_name as "Table Name",
-oracle.column_name as "Column Name"
+postgresql.data_type  as "PostgreSQL Data Type"
  FROM ORACLE inner join postgresql
  on  ORACLE.table_name = postgresql.table_name
  and oracle.column_name = postgresql.column_name;
