@@ -698,7 +698,7 @@ select src.owner "Schema Name", src.table_name "Table Name", src.constraint_name
 \qecho <h2>Missing Target Database Check Constraints</h2>
 \qecho <br>
 \qecho <li><a href="#Constraints2">Previous : </a><a href="#Top">Top : </a><a href="#Constraints4">Next</a></li>
-\qecho <h4>This section identifies the Foreign Key constraint that exist in Oracle but are missing/mismatch in PostgreSQL Database.</h4>
+\qecho <h4>This section identifies the Check constraint that exist in Oracle but are missing/mismatch in PostgreSQL Database.</h4>
 
 -- Check SQL start
 select distinct src.owner "Schema Name", src.table_name "Table Name",  coalesce(src.cnt,0) "Oracle Check Constraint Count", coalesce(tgt.cnt,0) "PostgreSQL Check Constraint Count"
@@ -711,7 +711,7 @@ select distinct src.owner "Schema Name", src.table_name "Table Name",  coalesce(
 		   and (t.table_name not like 'DR$%' and t.table_name not like 'BIN$%' and t.table_name not like 'MLOG$%')
 		   and t.table_name not in (select mview_name from dba_mviews where owner=upper(:'ora_schema'))) src
        full outer join
-       (select cls.oid::regclass::text table_name,
+       (select  	  relname as table_name,
 			   pgc.conname as constraint_name,
 			   count(*) over (partition by cls.oid) cnt
 		  from pg_constraint pgc
@@ -719,7 +719,7 @@ select distinct src.owner "Schema Name", src.table_name "Table Name",  coalesce(
 		  join pg_class  cls on pgc.conrelid = cls.oid
 		 where nsp.nspname = lower(:'pg_schema')
 		   and pgc.contype = 'c') tgt
-       ON lower(src.owner|| '.'||src.table_name)=tgt.table_name and (lower(src.constraint_name)=tgt.constraint_name)
+       ON  lower(src.table_name)=tgt.table_name and (lower(src.constraint_name)=tgt.constraint_name)
  where coalesce(tgt.cnt,0) <> coalesce(src.cnt,0)
    and lower(src.table_name) in (select tb.relname from pg_class tb join pg_namespace ns on ns.oid = tb.relnamespace where ns.nspname = lower(:'pg_schema'))
  order BY 1,2;
