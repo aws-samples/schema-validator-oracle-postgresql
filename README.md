@@ -12,6 +12,8 @@ PGPASSWORD=<pg_password>
 
 psql -h <postgresql endpoint> -d <postgresql database> -U <postgresql user> -v pgdbuser=<postgresql mapping user> -v oracledetails=//<oracle hostname>:<oracleport>/<sid> -v oracledbuser=<oracle username> -v oracledbpwsd=<oracle password> -f installer_ora_fdw.sql
 ```
+For Example:
+psql -h demoapg.cluster-abcdefg123456.us-west-2.rds.amazonaws.com -d dms_sample -U postgres -v pgdbuser=postgres -v oracledetails=//10.1.1.178:1521/oradev -v oracledbuser=dms_sample -v oracledbpwsd=dms_sample -f installer_ora_fdw.sql
 
 We use the following parameters:
 ```
@@ -46,6 +48,8 @@ PGPASSWORD=<pgpassword>
 
 psql -h <hostname> -p 5432 -d dms_sample -U <pgmasteruser> -f schemavalidator.sql -v ora_schema=DMS_SAMPLE -v pg_schema=dms_sample -v seq_max_val_compare=Y -v code_compare=Y
 ```
+For Example:
+psql -h demoapg.cluster-abcdefg123456.us-west-2.rds.amazonaws.com -p 5432 -d dms_sample -U postgres -f schemavalidator.sql -v ora_schema=DMS_SAMPLE -v pg_schema=dms_sample -v seq_max_val_compare=Y -v code_compare=Y
 
 The second option validates only schema objects:
 
@@ -54,6 +58,8 @@ PGPASSWORD=<pgpassword>
 
 psql -h <hostname> -p 5432 -d dms_sample -U <pgmasteruser> -f schemavalidator.sql -v ora_schema=DMS_SAMPLE -v pg_schema=dms_sample
 ```
+For Example:
+psql -h demoapg.cluster-abcdefg123456.us-west-2.rds.amazonaws.com -p 5432 -d dms_sample -U postgres -f schemavalidator.sql -v ora_schema=DMS_SAMPLE -v pg_schema=dms_sample
 
 During the conversion phase, we can use validator scripts post-schema conversion or post-procedural code conversion. We can also use them to identify schema object changes applied to Oracle Database during migration. By default, the validator script provides only schema object comparison that includes mismatch details for the following database objects:
 
