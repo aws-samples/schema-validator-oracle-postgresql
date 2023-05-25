@@ -4,7 +4,8 @@ The solution uses the oracle_fdw extension, available with Aurora PostgreSQL or 
 
 ## Installation and Execution
 
-1. Install the oracle_fdw extension and configure foreign tables for Oracle metadata views or tables (installer_ora_fdw.sql).
+1. Install the oracle_fdw extension and configure foreign tables for Oracle metadata views or tables (
+.sql).
 
 Using the psql command line, we initiate installation with the following command:
 ```
@@ -100,7 +101,7 @@ A migration engineer can identify the aforementioned special cases at an earlier
 
 
 ## Clean up
-After you complete schema validation, clean up the objects created by the scripts with the following command. Note that pgdbuser mentioned in the following command was passed as parameter during execution of the installar_ora_fdw.sql.
+After you complete schema validation, clean up the objects created by the scripts with the following command. Note that pgdbuser mentioned in the following command was passed as parameter during execution of the installer_ora_fdw.sql
 
 ```
 DROP SCHEMA IF EXISTS oracle_schema_compare cascade;
