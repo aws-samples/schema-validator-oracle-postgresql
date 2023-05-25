@@ -100,7 +100,7 @@ A migration engineer can identify the aforementioned special cases at an earlier
 
 
 ## Clean up
-After you complete schema validation, clean up the objects created by the scripts with the following command. Note that pgdbuser mentioned in following command was passed as a parameter while running the script installer_ora_fdw.sql. 
+After you complete schema validation, clean up the objects created by the scripts with the following command. Note that pgdbuser mentioned in the following command was passed as parameter during execution of the installar_ora_fdw.sql.
 
 ```
 DROP SCHEMA IF EXISTS oracle_schema_compare cascade;
